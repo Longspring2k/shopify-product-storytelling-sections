@@ -1,22 +1,27 @@
 # Scope and evidence boundaries
 
-## Documented state
+## Public candidate
 
-Implemented sections with staged preview and restore evidence; permanent production deployment is not asserted.
+This repository now includes a newly authored runnable demonstration of carousel lifecycle and accessible interaction policy. The demo is intentionally narrow: it is a standalone state machine, browser adapter, synthetic HTML/CSS review surface and deterministic tests.
 
-## Evidence basis
+## Relationship to the documented project
 
-Contract tests and preview-targeted runtime scripts cover structure, responsive boundaries, image loading and navigation. A runtime test script is not itself a claim that every recorded check passed or that the preview became the permanent live theme.
+The original private project covered broader Shopify product-storytelling and comparison-section work. The public demo illustrates one engineering mechanism relevant to that work, but it is not copied theme code and does not claim source equivalence. Retained private evidence is not redistributed.
 
-The public narrative was prepared against retained implementation and verification artifacts. Those private references are not redistributed. Source inspection, recorded test results, staging observations and production deployment are different levels of evidence; none is silently substituted for another.
+## Included
 
-## Not claimed or distributed
+- Original dependency-free JavaScript lifecycle model and fake scheduler.
+- Original CSS illustrations and illustrative feature copy.
+- Unit tests for timer, pause, navigation, replacement and disposal behavior.
+- English engineering documentation and a loopback static server.
 
-- No product claims, comparison copy, photography or private preview links are included.
-- This is a related section implementation, not a claim of whole-store authorship.
+## Excluded and not claimed
 
-## Public repository boundary
+- No client source, names, domains, product claims, photography, datasets or private preview links.
+- No Liquid section schema, Shopify APIs, Theme Editor event implementation, store credentials or deployment workflow.
+- No claim that the public demo is a full theme engine, production deployment, complete accessibility certification or performance benchmark.
+- No grant concerning private implementation or third-party materials; this candidate contains only newly written showcase material.
 
-Only newly written technical documentation and illustrative diagrams are included. There are no original application source files, datasets, screenshots, deployment scripts, credentials or inherited Git history. No business-performance figures or customer endorsements are asserted.
+## Evidence levels
 
-The repository is intended for technical review of the engineering approach. It makes no grant of rights to the original private implementation or third-party dependencies.
+Passing local unit tests demonstrate the documented pure-model behavior in the tested Node.js environment. A browser review can demonstrate the adapter and responsive interface on the served static page. Neither result by itself proves behavior in a Shopify storefront or its Theme Editor. Those integrations remain explicitly unimplemented.

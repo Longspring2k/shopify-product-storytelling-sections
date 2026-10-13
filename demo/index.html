@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accessible product story carousel</title>
+  <link rel="stylesheet" href="/demo/styles.css">
+</head>
+<body>
+  <main>
+    <header class="intro">
+      <p class="eyebrow">Lifecycle demonstration</p>
+      <h1>Product stories without automatic motion by default</h1>
+      <p>This original demo uses illustrative feature descriptions, not claims about an actual product. Start rotation explicitly, then inspect how independent pause reasons arbitrate it.</p>
+    </header>
+
+    <section class="story" data-carousel aria-roledescription="carousel" aria-label="Illustrative product stories">
+      <div class="story__stage">
+        <article class="panel panel--origin" data-carousel-panel="origin" data-label="Origin notes" aria-labelledby="origin-title">
+          <div class="art art--origin" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="copy">
+            <p class="eyebrow">Illustrative feature 01</p>
+            <h2 id="origin-title">Origin notes</h2>
+            <p>A structured panel can pair editorial context with a visual composition while keeping the reading order predictable.</p>
+            <details>
+              <summary>Learn more</summary>
+              <p>This in-page detail is deliberately local: the showcase does not link to a product or make a purchasing claim.</p>
+            </details>
+          </div>
+        </article>
+
+        <article class="panel panel--texture" data-carousel-panel="texture" data-label="Texture study" aria-labelledby="texture-title" hidden>
+          <div class="art art--texture" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="copy">
+            <p class="eyebrow">Illustrative feature 02</p>
+            <h2 id="texture-title">Texture study</h2>
+            <p>Pure CSS shapes stand in for photography so the interaction can be reviewed without redistributing visual assets.</p>
+            <details>
+              <summary>Inspect note</summary>
+              <p>Hidden panels are also removed from the keyboard focus order by the browser adapter.</p>
+            </details>
+          </div>
+        </article>
+
+        <article class="panel panel--ritual" data-carousel-panel="ritual" data-label="Use ritual" aria-labelledby="ritual-title" hidden>
+          <div class="art art--ritual" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="copy">
+            <p class="eyebrow">Illustrative feature 03</p>
+            <h2 id="ritual-title">Use ritual</h2>
+            <p>A final scene demonstrates wraparound navigation, explicit controls and focus visibility inside the active panel.</p>
+            <a href="#technical-notes">Read the technical notes</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="controls" aria-label="Carousel controls">
+        <button type="button" data-carousel-previous aria-label="Show previous story">←</button>
+        <div class="thumbnails" aria-label="Choose a story">
+          <button type="button" data-carousel-thumbnail aria-controls="origin-title" aria-current="true"><span>01</span> Origin</button>
+          <button type="button" data-carousel-thumbnail aria-controls="texture-title"><span>02</span> Texture</button>
+          <button type="button" data-carousel-thumbnail aria-controls="ritual-title"><span>03</span> Ritual</button>
+        </div>
+        <button type="button" data-carousel-next aria-label="Show next story">→</button>
+        <button type="button" class="rotation" data-carousel-rotation aria-pressed="false">Start rotation</button>
+      </div>
+
+      <aside class="diagnostics" aria-label="Rotation diagnostics">
+        <strong>Active pause reasons:</strong> <output data-carousel-reasons>none</output>
+      </aside>
+      <p class="sr-only" aria-live="polite" aria-atomic="true" data-carousel-live></p>
+    </section>
+
+    <section id="technical-notes" class="notes">
+      <h2>Interaction policy</h2>
+      <p>Pointer hover, page visibility and reduced-motion preference are transient independent reasons. Focus entry is conservative: it stops the user's rotation request, so leaving the carousel does not restart movement until the Start rotation control is pressed again.</p>
+    </section>
+  </main>
+  <script type="module" src="/demo/browser-adapter.mjs"></script>
+</body>
+</html>

@@ -1,21 +1,31 @@
 # Engineering decisions
 
-Shopify Product Storytelling Sections
+## Pure lifecycle core
 
-## Schema-backed content
+The core knows about slide identity, active index, user rotation intent, pause reasons and scheduler ownership. It does not query the DOM. This permits deterministic tests and lets a platform adapter translate real lifecycle events without embedding browser state in transition logic.
 
-Represent repeated comparison rows as native blocks rather than hard-coded marketing text.
+## Independent blockers, not one paused flag
 
-## Composition stays native
+A set models simultaneous reasons. Clearing hover cannot override a hidden document or reduced-motion preference. User intent is stored separately; explicit Stop persists after transient reasons disappear.
 
-Extend the product template without replacing the platform's core product surface.
+## Conservative focus policy
 
-## Interaction beyond the happy path
+Focus entry stops requested rotation rather than merely suspending it. This avoids motion resuming immediately after keyboard exploration. The user can restart through a native button after focus leaves.
 
-Include wraparound, repeated clicks, thumbnail selection and keyboard navigation in the verification design.
+## One-shot scheduling
 
-## Reading the architecture
+Chained one-shot timers expose reset rules and enable generation-token invalidation. Manual navigation begins a new full interval only when rotation is still permitted. A cancelled callback is harmless even if an injected scheduler invokes it late.
 
-Merchant section settings → Liquid semantic markup → Responsive CSS → Carousel state and controls → Product page
+## Button selectors rather than fake tabs
 
-The diagram reduces the implementation to its relevant responsibilities. It does not expose private endpoints, exact deployment layout, resource identifiers or operational configuration.
+The selectors are native buttons with `aria-current`, not incomplete ARIA tabs. Arrow/Home/End handling is an optional convenience layered on normal button operation. Previous/next navigation does not steal focus.
+
+## Dynamic update policy
+
+A valid replacement preserves the active ID when possible; otherwise it selects the first item. Invalid candidates are rejected before mutation. This deterministic policy is appropriate for section re-rendering without pretending to resolve semantic similarity.
+
+## Core and DOM boundaries
+
+The pure core accepts zero or one slide so collection transitions stay representable, and derives a non-removable scheduling guard for them. The browser adapter is stricter: it fails before listener attachment unless it finds matching, non-empty panels and thumbnails plus every required control/output. On remount it samples existing hover and focus-within state instead of waiting for a new entry event.
+
+See [Carousel lifecycle engineering notes](carousel-lifecycle.md) for contracts, lifecycle details, failure responses and the Shopify adapter boundary.

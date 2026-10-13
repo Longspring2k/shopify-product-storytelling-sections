@@ -1,49 +1,59 @@
 # Shopify Product Storytelling Sections
 
-A cohesive set of native sections for structured comparisons and image-led product storytelling, with editable content and responsive interaction checks.
+An anonymized technical showcase with a newly authored, runnable carousel-lifecycle demo for structured product storytelling.
 
-**Technical showcase · Documentation only · Anonymized**
+**Technical showcase · Original public demo · Anonymized**
 
-Shopify Online Store 2.0 | Liquid | JavaScript | CSS | Python | CDP
+JavaScript | HTML | CSS | Node.js | Accessible interaction design
 
-## Engineering problem
+## Demonstrated mechanism
 
-Rich product layouts need to retain semantic structure and merchant editing while supporting narrow screens, rapid interaction and varied image content.
+The runnable demo concentrates on lifecycle behavior that is easy to get subtly wrong:
 
-## Implementation scope
+- explicit, opt-in rotation rather than autoplay on initial load;
+- independent pause-reason arbitration for hover, focus, document visibility and reduced motion, plus an internally derived insufficient-slides guard;
+- one active timer, reset on navigation, with stale callback invalidation;
+- shared active state for previous/next controls and thumbnail buttons;
+- dynamic slide replacement that preserves a stable active ID;
+- atomic validation for dense collections, bounded 1000–60000 ms demo intervals, navigation targets and exact navigation options;
+- manual-only live-region announcements and hidden-panel focus-order management;
+- clean browser-adapter disposal for editor-style remounts.
 
-- Implemented semantic comparison markup with configurable settings and repeatable row blocks.
-- Preserved native product-template composition alongside custom sections.
-- Added a configurable carousel with heading, eyebrow, autoplay and interval settings.
-- Retained section ordering and source readback evidence through iterative delivery.
-- Prepared browser checks across phone, tablet and desktop widths for overflow, image loading and carousel navigation paths.
+The visual panels use original CSS illustration and illustrative descriptions. They contain no client assets, product claims, store data or private implementation source.
 
-## Architecture at a glance
+## Run it
 
-The following is an illustrative technical flow, not a client screenshot or a deployment topology.
+Requires a current Node.js release. There are no package dependencies.
 
-```mermaid
-flowchart TD
-    N0["Merchant section settings"]
-    N1["Liquid semantic markup"]
-    N0 --> N1
-    N2["Responsive CSS"]
-    N1 --> N2
-    N3["Carousel state and controls"]
-    N2 --> N3
-    N4["Product page"]
-    N3 --> N4
+```sh
+node --test
+node demo/run.mjs
+node demo/server.mjs
 ```
 
-## Evidence and delivery boundary
+Open `http://127.0.0.1:4178/` after starting the server. The static server accepts only GET/HEAD, serves a fixed file surface from this repository, disables caching and sends `X-Content-Type-Options: nosniff`.
 
-Implemented sections with staged preview and restore evidence; permanent production deployment is not asserted.
+## Architecture
 
-Contract tests and preview-targeted runtime scripts cover structure, responsive boundaries, image loading and navigation. A runtime test script is not itself a claim that every recorded check passed or that the preview became the permanent live theme.
+```mermaid
+flowchart LR
+  UI[Native controls and DOM events] --> A[Browser adapter]
+  A --> M[Pure carousel lifecycle]
+  M --> P[Pause-reason set]
+  M --> S[Injectable scheduler]
+  M --> C[Validated slide collection]
+  M --> A
+```
 
-## Read more
+## Repository map
 
-- [Engineering decisions](docs/engineering.md)
-- [Scope and evidence boundaries](docs/scope.md)
+- [`src/carousel-lifecycle.mjs`](src/carousel-lifecycle.mjs) — pure state and timer ownership
+- [`test/carousel-lifecycle.test.mjs`](test/carousel-lifecycle.test.mjs) — deterministic behavioral tests
+- [`demo/index.html`](demo/index.html) — responsive browser review surface
+- [`demo/browser-adapter.mjs`](demo/browser-adapter.mjs) — DOM lifecycle integration
+- [`docs/carousel-lifecycle.md`](docs/carousel-lifecycle.md) — contracts, focus policy, lifecycle and trade-offs
+- [`docs/scope.md`](docs/scope.md) — evidence and publication boundaries
 
-> This repository describes verified implementation work at a technical level. Original source, identities, business data and visual assets are intentionally omitted. It is not an installable application or a claim that the original private implementation is open source.
+## Evidence boundary
+
+This executable demo is fresh public-showcase work informed by the engineering problem described in this repository. It is narrower than the original private project. It does not reproduce a Shopify theme, prove a production deployment, certify full accessibility or make performance claims. Platform-specific schema, Liquid rendering and Theme Editor event wiring are documented as adapter responsibilities rather than impersonated.
